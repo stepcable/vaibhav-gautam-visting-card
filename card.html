@@ -465,52 +465,40 @@
 
     <script>
         // ============================================================
-        // SAVE CONTACT - Opens Native Phone Contact Save Dialog
+        // SAVE CONTACT - Directly opens phone's native contact save
         // ============================================================
         function saveContact() {
             const name = 'Mr. Vaibhav Gautama';
-            const phone = '+918448819330';
+            const phone = '+91 8448819330';
+            const email = 'vaibhav.gautama@thestepindia.com';
+            const company = 'STEP Wires & Cables';
             
-            // For Android - Creates a contact intent
-            // For iOS - Opens contact creation
-            // This is the most reliable way to open native contact save
-            
-            // First try: Android contact intent
-            const androidIntent = `intent://${phone}#Intent;action=android.intent.action.INSERT;type=vnd.android.cursor.dir/contact;B.com.android.contacts.extra.CREATE_CONTACT=true;S.name=${encodeURIComponent(name)};S.phone=${phone};end`;
-            
-            // Second try: tel: protocol (works on both Android and iOS)
-            // When tel: is opened, most phones give option to "Add to Contacts"
-            
-            // Try Android intent first, then fallback to tel:
-            try {
-                // For Android - uses intent protocol
-                window.location.href = androidIntent;
-            } catch(e) {
-                // Fallback: Open tel: which gives option to save contact
-                window.location.href = `tel:${phone}`;
-            }
-            
-            // Also create a vCard download as backup
-            setTimeout(() => {
-                const vcard = `BEGIN:VCARD
+            // Create vCard data
+            const vcard = `BEGIN:VCARD
         VERSION:3.0
         FN:${name}
-        ORG:STEP Wires & Cables
+        ORG:${company}
         TITLE:Head - Operations
         TEL:${phone}
-        EMAIL:vaibhav.gautama@thestepindia.com
+        EMAIL:${email}
         URL:https://www.stepcable.com
         ADR:;;Stellar 1425, Sector 142, Noida;;;;
         END:VCARD`;
-                
-                const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = 'Vaibhav_Gautama.vcf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(link.href);
+            
+            // Create blob and download as .vcf file
+            const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'Vaibhav_Gautama.vcf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+            
+            // Also try to open with tel: (for Android/iOS)
+            // This will open the phone's native contact save
+            setTimeout(() => {
+                window.location.href = `tel:${phone}`;
             }, 100);
         }
 
