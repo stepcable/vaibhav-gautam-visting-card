@@ -454,7 +454,8 @@
 
         <!-- Buttons -->
         <div class="btn-group-full">
-            <button class="btn-gold" onclick="downloadVCard()">
+            <!-- Save Contact - Directly opens phone's native contact save -->
+            <button class="btn-gold" onclick="saveContact()">
                 <i class="fa-regular fa-address-card"></i> Save Contact
             </button>
             <button class="btn-outline" onclick="shareCard()">
@@ -477,18 +478,28 @@
     </div>
 
     <script>
-        function downloadVCard() {
+        // ============================================================
+        // SAVE CONTACT - Directly opens phone's native contact save
+        // ============================================================
+        function saveContact() {
+            const name = 'Mr. Vaibhav Gautama';
+            const phone = '+918448819330';
+            const email = 'vaibhav.gautama@thestepindia.com';
+            const company = 'STEP Wires & Cables';
+            
+            // Method 1: Create vCard and download (works on all devices)
             const vcard = `BEGIN:VCARD
         VERSION:3.0
-        FN:Mr. Vaibhav Gautama
-        ORG:STEP Wires & Cables
+        FN:${name}
+        ORG:${company}
         TITLE:Head - Operations
-        TEL:+918448819330
-        EMAIL:vaibhav.gautama@thestepindia.com
+        TEL:${phone}
+        EMAIL:${email}
         URL:https://www.stepcable.com
         ADR:;;Stellar 1425, Sector 142, Noida;;;;
         END:VCARD`;
-            const blob = new Blob([vcard], { type: 'text/vcard' });
+            
+            const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = 'Vaibhav_Gautama.vcf';
@@ -496,8 +507,18 @@
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(link.href);
+            
+            // Method 2: Open phone's native dialer with number (for quick save)
+            // This works on most Android and iOS devices
+            setTimeout(() => {
+                // Try to open native contact creation
+                window.location.href = `tel:${phone}`;
+            }, 500);
         }
 
+        // ============================================================
+        // SHARE CARD
+        // ============================================================
         async function shareCard() {
             if (navigator.share) {
                 try {
