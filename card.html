@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>STEP | Complete Visiting Card</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 30%, #0a1a2f, #030b16);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            padding: 24px;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #d8b46a25 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(100px);
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #ffffff08 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(120px);
+        }
+
+        .full-card {
+            width: 480px;
+            max-width: 100%;
+            background: rgba(8, 22, 44, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 48px;
+            border: 1px solid rgba(216, 180, 106, 0.20);
+            box-shadow: 0 40px 90px rgba(0, 0, 0, 0.7);
+            padding: 36px 30px 32px;
+            color: #fff;
+            position: relative;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .full-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d8b46a, #f5d78e, #d8b46a, transparent);
+            border-radius: 100%;
+            opacity: 0.7;
+        }
+
+        .logo-full {
+            height: 60px;
+            width: auto;
+            display: block;
+            margin: 0 auto 8px;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+        }
+
+        .company-full {
+            text-align: center;
+            letter-spacing: 5px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #d8b46a;
+        }
+
+        .divider-full {
+            width: 80px;
+            height: 3px;
+            margin: 15px auto;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #d8b46a, #f2d59e);
+        }
+
+        .title-full {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .title-full span {
+            color: #d8b46a;
+        }
+
+        .tagline-full {
+            text-align: center;
+            color: #bcc9db;
+            margin-top: 8px;
+            font-size: 15px;
+        }
+
+        .profile-full {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 16px 20px;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin: 20px 0;
+        }
+
+        .avatar-full {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(216, 180, 106, 0.15), rgba(216, 180, 106, 0.05));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            color: #d8b46a;
+            border: 2px solid rgba(216, 180, 106, 0.25);
+            flex-shrink: 0;
+        }
+
+        .profile-full .info h3 {
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .profile-full .info p {
+            font-size: 14px;
+            color: #d8b46a;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .profile-full .info .tag {
+            font-size: 12px;
+            color: #a5b9d0;
+            font-weight: 400;
+        }
+
+        .actions-full {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .action-full {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 14px 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: #fff;
+            transition: 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .action-full i {
+            font-size: 22px;
+            color: #d8b46a;
+            transition: 0.3s;
+        }
+
+        .action-full span {
+            font-size: 12px;
+            font-weight: 500;
+            color: #cbd8e8;
+        }
+
+        .action-full:hover {
+            background: #d8b46a;
+            border-color: #d8b46a;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(216, 180, 106, 0.20);
+        }
+
+        .action-full:hover i,
+        .action-full:hover span {
+            color: #081835;
+        }
+
+        .contact-full {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .contact-item-full {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: 0.3s;
+        }
+
+        .contact-item-full:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(216, 180, 106, 0.10);
+        }
+
+        .contact-item-full i {
+            width: 28px;
+            font-size: 20px;
+            color: #d8b46a;
+            text-align: center;
+        }
+
+        .contact-item-full .info h4 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .contact-item-full .info p {
+            font-size: 13px;
+            color: #b7c7db;
+            margin-top: 2px;
+        }
+
+        .social-full {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin: 20px 0 10px;
+        }
+
+        .social-full a {
+            width: 54px;
+            height: 54px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            color: #fff;
+            text-decoration: none;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .social-full a:hover {
+            background: #d8b46a;
+            color: #081835;
+            transform: translateY(-6px);
+            box-shadow: 0 12px 28px rgba(216, 180, 106, 0.25);
+        }
+
+        .btn-group-full {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn-gold {
+            flex: 1;
+            background: #d8b46a;
+            border: none;
+            padding: 14px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 14px;
+            color: #081835;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 6px 20px rgba(216, 180, 106, 0.15);
+        }
+
+        .btn-gold:hover {
+            background: #eac87a;
+            transform: translateY(-3px);
+            box-shadow: 0 16px 36px rgba(216, 180, 106, 0.30);
+        }
+
+        .btn-outline {
+            flex: 1;
+            background: transparent;
+            border: 1px solid rgba(216, 180, 106, 0.25);
+            padding: 14px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #d8b46a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-outline:hover {
+            background: rgba(216, 180, 106, 0.08);
+            border-color: #d8b46a;
+            transform: translateY(-3px);
+        }
+
+        .footer-full {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: #687a92;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 18px;
+        }
+
+        .footer-full strong {
+            color: #d8b46a;
+            font-weight: 600;
+            letter-spacing: 4px;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 10px 20px;
+            border-radius: 60px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: 0.3s;
+            margin-top: 15px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.10);
+        }
+
+        @media (max-width: 480px) {
+            .full-card {
+                padding: 28px 18px;
+            }
+            .title-full {
+                font-size: 26px;
+            }
+            .actions-full {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .profile-full {
+                flex-direction: column;
+                text-align: center;
+            }
+            .btn-group-full {
+                flex-direction: column;
+            }
+            .logo-full {
+                height: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== FULL VISITING CARD ===== -->
+    <div class="full-card">
+
+        <img src="logo wires and cable.png" alt="STEP Logo" class="logo-full" />
+        <div class="company-full">STEP WIRES &amp; CABLES</div>
+        <div class="divider-full"></div>
+
+        <div class="title-full">POWERING <br /><span>CONNECTIONS</span></div>
+        <p class="tagline-full">Your Trusted Electrical Partner</p>
+
+        <!-- Profile -->
+        <div class="profile-full">
+            <div class="avatar-full"><i class="fa-solid fa-user-tie"></i></div>
+            <div class="info">
+                <h3>Mr. Vaibhav Gautama</h3>
+                <p>Head - Operations</p>
+                <div class="tag"><i class="fas fa-building" style="margin-right:6px;"></i> STEP Wires &amp; Cables</div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="actions-full">
+            <a href="tel:+918448819330" class="action-full">
+                <i class="fa-solid fa-phone"></i>
+                <span>Call</span>
+            </a>
+            <a href="https://wa.me/918448819330" target="_blank" class="action-full">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>WhatsApp</span>
+            </a>
+            <a href="https://www.stepcable.com" target="_blank" class="action-full">
+                <i class="fa-solid fa-globe"></i>
+                <span>Website</span>
+            </a>
+            <a href="https://maps.google.com/?q=Stellar+1425+Sector+142+Noida" target="_blank" class="action-full">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>Location</span>
+            </a>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="contact-full">
+            <div class="contact-item-full">
+                <i class="fa-solid fa-phone"></i>
+                <div class="info">
+                    <h4>Mobile</h4>
+                    <p>+91 84488 19330</p>
+                </div>
+            </div>
+            <div class="contact-item-full">
+                <i class="fa-regular fa-envelope"></i>
+                <div class="info">
+                    <h4>Email</h4>
+                    <p>info@stepcable.com</p>
+                </div>
+            </div>
+            <div class="contact-item-full">
+                <i class="fa-solid fa-location-dot"></i>
+                <div class="info">
+                    <h4>Office</h4>
+                    <p>Stellar 1425, Sector 142, Noida</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="social-full">
+            <a href="https://www.instagram.com/stepcables?igsh=cDl5NW5saDQ3NGZl" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/share/1FxY9i8xA3/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.linkedin.com/company/step-cables1/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+
+        <!-- Buttons -->
+        <div class="btn-group-full">
+            <button class="btn-gold" onclick="downloadVCard()">
+                <i class="fa-regular fa-address-card"></i> Save Contact
+            </button>
+            <button class="btn-outline" onclick="shareCard()">
+                <i class="fa-regular fa-share-from-square"></i> Share Card
+            </button>
+        </div>
+
+        <!-- Back Button -->
+        <div style="text-align:center; margin-top:12px;">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fa-solid fa-arrow-left"></i> Back to QR
+            </button>
+        </div>
+
+        <div class="footer-full">
+            <i class="fas fa-circle" style="color:#d8b46a; font-size:6px; vertical-align:middle; margin-right:10px;"></i>
+            POWERED BY <strong>STEP WIRES &amp; CABLES</strong>
+        </div>
+
+    </div>
+
+    <script>
+        function downloadVCard() {
+            const vcard = `BEGIN:VCARD
+        VERSION:3.0
+        FN:Mr. Vaibhav Gautama
+        ORG:STEP Wires & Cables
+        TITLE:Head - Operations
+        TEL:+918448819330
+        EMAIL:info@stepcable.com
+        URL:https://www.stepcable.com
+        ADR:;;Stellar 1425, Sector 142, Noida;;;;
+        END:VCARD`;
+            const blob = new Blob([vcard], { type: 'text/vcard' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'Vaibhav_Gautama.vcf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+        }
+
+        async function shareCard() {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'STEP Wires & Cables',
+                        text: 'Connect with Mr. Vaibhav Gautama',
+                        url: window.location.href,
+                    });
+                } catch (_) {}
+            } else {
+                try {
+                    await navigator.clipboard.writeText(window.location.href);
+                    alert('✅ Card link copied to clipboard!');
+                } catch {
+                    alert('📋 Copy this link: ' + window.location.href);
+                }
+            }
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+    </script>
+
+</body>
+</html>
