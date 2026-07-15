@@ -89,7 +89,6 @@
             opacity: 0.7;
         }
 
-        /* ===== BADA LOGO - SIRF LOGO ===== */
         .logo-full {
             height: 130px;
             width: auto;
@@ -106,7 +105,6 @@
             background: linear-gradient(90deg, #d8b46a, #f2d59e);
         }
 
-        /* Profile */
         .profile-full {
             display: flex;
             align-items: center;
@@ -150,7 +148,6 @@
             font-weight: 400;
         }
 
-        /* Actions */
         .actions-full {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -196,7 +193,6 @@
             color: #081835;
         }
 
-        /* Contact */
         .contact-full {
             display: flex;
             flex-direction: column;
@@ -238,7 +234,6 @@
             margin-top: 2px;
         }
 
-        /* Social */
         .social-full {
             display: flex;
             justify-content: center;
@@ -268,7 +263,6 @@
             box-shadow: 0 12px 28px rgba(216, 180, 106, 0.25);
         }
 
-        /* Buttons */
         .btn-group-full {
             display: flex;
             gap: 12px;
@@ -383,14 +377,11 @@
 </head>
 <body>
 
-    <!-- ===== FULL VISITING CARD ===== -->
     <div class="full-card">
 
-        <!-- Sirf Bada Logo -->
         <img src="logo wires and cable.png" alt="STEP Logo" class="logo-full" />
         <div class="divider-full"></div>
 
-        <!-- Profile -->
         <div class="profile-full">
             <div class="avatar-full"><i class="fa-solid fa-user-tie"></i></div>
             <div class="info">
@@ -400,7 +391,6 @@
             </div>
         </div>
 
-        <!-- Quick Actions -->
         <div class="actions-full">
             <a href="tel:+918448819330" class="action-full">
                 <i class="fa-solid fa-phone"></i>
@@ -420,7 +410,6 @@
             </a>
         </div>
 
-        <!-- Contact Information -->
         <div class="contact-full">
             <div class="contact-item-full">
                 <i class="fa-solid fa-phone"></i>
@@ -445,16 +434,14 @@
             </div>
         </div>
 
-        <!-- Social Links -->
         <div class="social-full">
             <a href="https://www.instagram.com/stepcables?igsh=cDl5NW5saDQ3NGZl" target="_blank"><i class="fab fa-instagram"></i></a>
             <a href="https://www.facebook.com/share/1FxY9i8xA3/" target="_blank"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.linkedin.com/company/step-cables1/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
         </div>
 
-        <!-- Buttons -->
         <div class="btn-group-full">
-            <!-- Save Contact - Directly opens phone's native contact save -->
+            <!-- Save Contact - Opens native contact save dialog -->
             <button class="btn-gold" onclick="saveContact()">
                 <i class="fa-regular fa-address-card"></i> Save Contact
             </button>
@@ -463,7 +450,6 @@
             </button>
         </div>
 
-        <!-- Back Button -->
         <div style="text-align:center; margin-top:12px;">
             <button class="back-btn" onclick="goBack()">
                 <i class="fa-solid fa-arrow-left"></i> Back to QR
@@ -479,41 +465,53 @@
 
     <script>
         // ============================================================
-        // SAVE CONTACT - Directly opens phone's native contact save
+        // SAVE CONTACT - Opens Native Phone Contact Save Dialog
         // ============================================================
         function saveContact() {
             const name = 'Mr. Vaibhav Gautama';
             const phone = '+918448819330';
-            const email = 'vaibhav.gautama@thestepindia.com';
-            const company = 'STEP Wires & Cables';
             
-            // Method 1: Create vCard and download (works on all devices)
-            const vcard = `BEGIN:VCARD
+            // For Android - Creates a contact intent
+            // For iOS - Opens contact creation
+            // This is the most reliable way to open native contact save
+            
+            // First try: Android contact intent
+            const androidIntent = `intent://${phone}#Intent;action=android.intent.action.INSERT;type=vnd.android.cursor.dir/contact;B.com.android.contacts.extra.CREATE_CONTACT=true;S.name=${encodeURIComponent(name)};S.phone=${phone};end`;
+            
+            // Second try: tel: protocol (works on both Android and iOS)
+            // When tel: is opened, most phones give option to "Add to Contacts"
+            
+            // Try Android intent first, then fallback to tel:
+            try {
+                // For Android - uses intent protocol
+                window.location.href = androidIntent;
+            } catch(e) {
+                // Fallback: Open tel: which gives option to save contact
+                window.location.href = `tel:${phone}`;
+            }
+            
+            // Also create a vCard download as backup
+            setTimeout(() => {
+                const vcard = `BEGIN:VCARD
         VERSION:3.0
         FN:${name}
-        ORG:${company}
+        ORG:STEP Wires & Cables
         TITLE:Head - Operations
         TEL:${phone}
-        EMAIL:${email}
+        EMAIL:vaibhav.gautama@thestepindia.com
         URL:https://www.stepcable.com
         ADR:;;Stellar 1425, Sector 142, Noida;;;;
         END:VCARD`;
-            
-            const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'Vaibhav_Gautama.vcf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(link.href);
-            
-            // Method 2: Open phone's native dialer with number (for quick save)
-            // This works on most Android and iOS devices
-            setTimeout(() => {
-                // Try to open native contact creation
-                window.location.href = `tel:${phone}`;
-            }, 500);
+                
+                const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'Vaibhav_Gautama.vcf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(link.href);
+            }, 100);
         }
 
         // ============================================================
