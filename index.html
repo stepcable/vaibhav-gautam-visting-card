@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>STEP | Scan QR Code</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 30%, #0a1a2f, #030b16);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            padding: 24px;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #d8b46a25 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(100px);
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #ffffff08 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(120px);
+        }
+
+        .card {
+            width: 460px;
+            max-width: 100%;
+            background: rgba(8, 22, 44, 0.65);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 48px;
+            border: 1px solid rgba(216, 180, 106, 0.20);
+            box-shadow: 0 40px 90px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(216, 180, 106, 0.05) inset;
+            padding: 36px 30px 32px;
+            color: #fff;
+            position: relative;
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d8b46a, #f5d78e, #d8b46a, transparent);
+            border-radius: 100%;
+            opacity: 0.7;
+        }
+
+        .logo-img {
+            height: 60px;
+            width: auto;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .company-name {
+            letter-spacing: 5px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #d8b46a;
+            margin-bottom: 5px;
+        }
+
+        .divider {
+            width: 80px;
+            height: 3px;
+            margin: 15px auto;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #d8b46a, #f2d59e);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        h1 span {
+            color: #d8b46a;
+        }
+
+        .tagline {
+            font-size: 15px;
+            font-weight: 400;
+            color: #bcc9db;
+            margin-top: 8px;
+        }
+
+        .qr-container {
+            width: 200px;
+            height: 200px;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 12px;
+            margin: 25px auto;
+            box-shadow: 0 16px 48px rgba(216, 180, 106, 0.20);
+            border: 1px solid rgba(216, 180, 106, 0.15);
+            transition: 0.3s;
+        }
+
+        .qr-container:hover {
+            transform: scale(1.03);
+            box-shadow: 0 20px 60px rgba(216, 180, 106, 0.30);
+        }
+
+        .qr-container img {
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+        }
+
+        .scan-btn {
+            display: inline-block;
+            background: #d8b46a;
+            padding: 14px 40px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 16px;
+            color: #06162f;
+            box-shadow: 0 12px 30px rgba(216, 180, 106, 0.20);
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            margin-top: 10px;
+        }
+
+        .scan-btn i {
+            margin-right: 10px;
+        }
+
+        .scan-btn:hover {
+            background: #eac77a;
+            transform: translateY(-3px);
+            box-shadow: 0 16px 36px rgba(216, 180, 106, 0.30);
+        }
+
+        .profile-mini {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 14px 18px;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 25px;
+            text-align: left;
+        }
+
+        .profile-mini .avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(216, 180, 106, 0.15), rgba(216, 180, 106, 0.05));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            color: #d8b46a;
+            border: 1.5px solid rgba(216, 180, 106, 0.25);
+            flex-shrink: 0;
+        }
+
+        .profile-mini .info h4 {
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .profile-mini .info p {
+            font-size: 13px;
+            color: #d8b46a;
+            font-weight: 500;
+        }
+
+        .profile-mini .info .small {
+            font-size: 11px;
+            color: #a5b9d0;
+            font-weight: 400;
+        }
+
+        .footer-note {
+            margin-top: 25px;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #687a92;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 18px;
+        }
+
+        .footer-note strong {
+            color: #d8b46a;
+            font-weight: 600;
+            letter-spacing: 3px;
+        }
+
+        .info-text {
+            font-size: 12px;
+            color: #8899aa;
+            margin-top: 10px;
+        }
+
+        .info-text i {
+            margin-right: 6px;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 28px 18px;
+            }
+            h1 {
+                font-size: 26px;
+            }
+            .qr-container {
+                width: 170px;
+                height: 170px;
+                padding: 10px;
+            }
+            .logo-img {
+                height: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== QR CODE PAGE ===== -->
+    <div class="card">
+
+        <img src="logo wires and cable.png" alt="STEP Wires & Cables Logo" class="logo-img" />
+        <div class="company-name">STEP WIRES &amp; CABLES</div>
+        <div class="divider"></div>
+
+        <h1>POWERING <br /><span>CONNECTIONS</span></h1>
+        <p class="tagline">Your Trusted Electrical Partner</p>
+
+        <!-- QR Code -->
+        <div class="qr-container">
+            <img id="qrImage" src="" alt="QR Code" />
+        </div>
+
+        <button class="scan-btn" onclick="openFullCard()">
+            <i class="fa-solid fa-qrcode"></i> Open Full Card
+        </button>
+        <p class="info-text"><i class="fa-solid fa-mobile-screen-button"></i> QR code scan karke poori visiting card dekhen</p>
+
+        <!-- Mini Profile -->
+        <div class="profile-mini">
+            <div class="avatar">
+                <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <div class="info">
+                <h4>Mr. Vaibhav Gautama</h4>
+                <p>Head - Operations</p>
+                <div class="small"><i class="fas fa-building" style="margin-right:4px;"></i> STEP Wires &amp; Cables</div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <i class="fas fa-circle" style="color:#d8b46a; font-size:6px; vertical-align:middle; margin-right:8px;"></i>
+            POWERED BY <strong>STEP WIRES &amp; CABLES</strong>
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================================
+        // QR CODE GENERATE - Deploy ke baad bhi kaam karega
+        // ============================================================
+        
+        function generateQRCode() {
+            // ✅ Dynamic URL - yeh deploy ke baad bhi kaam karega
+            // Current domain + /card.html
+            const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
+            const fullCardUrl = baseUrl + 'card.html';
+            
+            // QR code generate karo
+            const qrImage = document.getElementById('qrImage');
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(fullCardUrl)}&bgcolor=ffffff&color=0a1a2f&margin=20`;
+            qrImage.src = qrUrl;
+            qrImage.alt = 'QR Code - Scan to open full visiting card';
+            
+            console.log('✅ QR Code generated for: ' + fullCardUrl);
+        }
+
+        // Open Full Card Page
+        function openFullCard() {
+            const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
+            window.location.href = baseUrl + 'card.html';
+        }
+
+        // Page load par QR code generate karo
+        window.onload = function() {
+            generateQRCode();
+        };
+    </script>
+
+</body>
+</html>
