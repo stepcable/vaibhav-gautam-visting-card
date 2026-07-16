@@ -83,7 +83,6 @@
             opacity: 0.7;
         }
 
-        /* ===== BADA LOGO ===== */
         .logo-img {
             height: 120px;
             width: auto;
@@ -210,16 +209,6 @@
             letter-spacing: 3px;
         }
 
-        .info-text {
-            font-size: 12px;
-            color: #8899aa;
-            margin-top: 10px;
-        }
-
-        .info-text i {
-            margin-right: 6px;
-        }
-
         @media (max-width: 480px) {
             .card {
                 padding: 28px 18px;
@@ -237,14 +226,11 @@
 </head>
 <body>
 
-    <!-- ===== QR CODE PAGE ===== -->
     <div class="card">
 
-        <!-- Sirf Bada Logo -->
         <img src="logo wires and cable.png" alt="STEP Wires & Cables Logo" class="logo-img" />
         <div class="divider"></div>
 
-        <!-- QR Code -->
         <div class="qr-container">
             <img id="qrImage" src="" alt="QR Code" />
         </div>
@@ -252,9 +238,7 @@
         <button class="scan-btn" onclick="openFullCard()">
             <i class="fa-solid fa-qrcode"></i> Open Full Card
         </button>
-        <p class="info-text"><i class="fa-solid fa-mobile-screen-button"></i> QR code scan karke poori visiting card dekhen</p>
 
-        <!-- Mini Profile -->
         <div class="profile-mini">
             <div class="avatar">
                 <i class="fa-solid fa-user-tie"></i>
@@ -274,17 +258,10 @@
     </div>
 
     <script>
-        // ============================================================
-        // QR CODE GENERATE - Deploy ke baad bhi kaam karega
-        // ============================================================
-        
         function generateQRCode() {
-            // ✅ Dynamic URL - yeh deploy ke baad bhi kaam karega
-            // Current domain + /card.html
             const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
             const fullCardUrl = baseUrl + 'card.html';
             
-            // QR code generate karo
             const qrImage = document.getElementById('qrImage');
             const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(fullCardUrl)}&bgcolor=ffffff&color=0a1a2f&margin=20`;
             qrImage.src = qrUrl;
@@ -293,13 +270,11 @@
             console.log('✅ QR Code generated for: ' + fullCardUrl);
         }
 
-        // Open Full Card Page
         function openFullCard() {
             const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
             window.location.href = baseUrl + 'card.html';
         }
 
-        // Page load par QR code generate karo
         window.onload = function() {
             generateQRCode();
         };
